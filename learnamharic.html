@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="am">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Learn Amharic Fidel</title>
+
+  <style>
+    :root {
+      --blue: #123c69;
+      --light-blue: #eaf4fc;
+      --gold: #f3b532;
+      --green: #198754;
+      --ink: #1d2935;
+      --muted: #5e6d79;
+      --border: #d7e2eb;
+      --paper: #f4f8fb;
+      --white: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: Arial, "Noto Sans Ethiopic", "Nyala", sans-serif;
+    }
+
+    header {
+      padding: 30px 16px;
+      color: white;
+      background: linear-gradient(135deg, #0e3157, #1d70b7);
+    }
+
+    .container {
+      width: min(1200px, calc(100% - 28px));
+      margin: auto;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.8rem, 6vw, 3rem);
+    }
+
+    header p {
+      max-width: 800px;
+      margin: 10px 0 0;
+      color: #dceefd;
+    }
+
+    main {
+      padding: 22px 0 50px;
+    }
+
+    .notice,
+    .family,
+    .quiz-box {
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      background: var(--white);
+      box-shadow: 0 5px 18px rgba(12, 52, 89, 0.08);
+    }
+
+    .notice {
+      margin-bottom: 20px;
+      padding: 16px;
+      border-left: 6px solid var(--gold);
+    }
+
+    .notice strong {
+      color: var(--blue);
+    }
+
+    .search {
+      width: 100%;
+      margin: 4px 0 20px;
+      padding: 13px 15px;
+      border: 1px solid #b9cad8;
+      border-radius: 10px;
+      font-size: 1rem;
+    }
+
+    .search:focus {
+      outline: 3px solid rgba(29, 112, 183, 0.18);
+      border-color: #1d70b7;
+    }
+
+    h2 {
+      margin: 28px 0 12px;
+      color: var(--blue);
+    }
+
+    #families {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(305px, 1fr));
+      gap: 16px;
+    }
+
+    .family {
+      overflow: hidden;
+    }
+
+    .family-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 14px;
+      color: white;
+      background: var(--blue);
+    }
+
+    .family-header h3 {
+      margin: 0;
+      font-size: 1.15rem;
+    }
+
+    .family-header small {
+      display: block;
+      margin-top: 3px;
+      color: #d8ecfa;
+    }
+
+    button {
+      min-height: 38px;
+      padding: 7px 10px;
+      cursor: pointer;
+      border: 0;
+      border-radius: 8px;
+      color: white;
+      background: var(--green);
+      font-weight: bold;
+    }
+
+    button:hover {
+      filter: brightness(1.08);
+    }
+
+    .letters {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 9px;
+      padding: 12px;
+    }
+
+    .letter-card {
+      min-height: 135px;
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #f8fbfe;
+    }
+
+    .letter-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+    }
+
+    .glyph {
+      display: block;
+      color: var(--blue);
+      font-size: 2rem;
+      line-height: 1;
+      font-weight: bold;
+    }
+
+    .sound {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 0.8rem;
+      font-family: Arial, sans-serif;
+    }
+
+    .example {
+      margin-top: 9px;
+      padding-top: 8px;
+      border-top: 1px solid #dce6ee;
+    }
+
+    .word-line {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 5px;
+    }
+
+    .word {
+      color: #674800;
+      font-size: 1rem;
+      font-weight: bold;
+    }
+
+    .meaning {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-family: Arial, sans-serif;
+      font-size: 0.75rem;
+    }
+
+    .rare {
+      color: #7b5a18;
+      font-size: 0.78rem;
+      line-height: 1.35;
+    }
+
+    .small-speak {
+      min-width: 33px;
+      min-height: 33px;
+      padding: 5px 7px;
+      font-size: 0.8rem;
+    }
+
+    .quiz-box {
+      padding: 18px;
+    }
+
+    #question {
+      color: var(--blue);
+      font-size: 1.1rem;
+      font-weight: bold;
+    }
+
+    #answers {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(60px, 1fr));
+      gap: 10px;
+    }
+
+    .answer {
+      min-height: 62px;
+      color: var(--blue);
+      border: 1px solid #c8dce9;
+      background: var(--light-blue);
+      font-size: 1.8rem;
+    }
+
+    #result {
+      min-height: 24px;
+      margin: 12px 0;
+      font-weight: bold;
+    }
+
+    .correct {
+      color: var(--green);
+    }
+
+    .incorrect {
+      color: #b02a37;
+    }
+
+    footer {
+      padding: 22px 16px;
+      color: #d9e9f7;
+      text-align: center;
+      background: #0e3157;
+      font-size: 0.88rem;
+    }
+
+    @media (max-width: 420px) {
+      .letters {
+        grid-template-columns: 1fr;
+      }
+
+      #answers {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <h1>Learn Amharic Fidel — ፊደል</h1>
+      <p>
+        Learn each Fidel letter, its reading sound, an example word, and Bible-related vocabulary.
+      </p>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="notice">
+      <strong>How to study:</strong>
+      Read each card from top to bottom. Tap 🔊 to hear the Fidel letter or word.
+      Audio depends on whether your phone or browser has an Amharic voice installed.
+      Some historical Fidel forms are rare in modern Amharic, so the lesson marks them clearly rather than using invented words.
+    </section>
+
+    <input
+      id="search"
+      class="search"
+      type="search"
+      placeholder="Search a letter, sound, Amharic word, or English meaning..."
+    />
+
+    <h2>Amharic Fidel Families: ሀ to ፐ</h2>
+    <div id="families"></div>
+
+    <h2>Quick Quiz</h2>
+    <section class="quiz-box">
+      <p id="question">Loading question...</p>
+      <div id="answers"></div>
+      <p id="result"></p>
+      <button onclick="newQuiz()">New Question</button>
+    </section>
+  </main>
+
+  <footer>
+    በየቀኑ ትንሽ ትንሽ ተማሩ። — Study a little every day.
+  </footer>
+
+  <script>
+    const vowels = ["ä", "u", "i", "a", "e", "ə", "o"];
+
+    /*
+      word: Amharic example
+      meaning: English meaning
+      null: a rare historical form without a practical beginning-word example
+    */
+    const families = [
+      ["ሀ", "h", ["ሀ","ሁ","ሂ","ሃ","ሄ","ህ","ሆ"], [
+        ["ሀሌሉያ","Hallelujah / praise the Lord"],
+        ["ሁሉ","all / everyone"],
+        ["ሂድ","go"],
+        ["ሃይማኖት","faith / religion"],
+        ["ሄዋን","Eve"],
+        ["ህይወት","life"],
+        ["ሆሳዕና","Hosanna"]
+      ]],
+
+      ["ለ", "l", ["ለ","ሉ","ሊ","ላ","ሌ","ል","ሎ"], [
+        ["ለምለም","green / flourishing"],
+        ["ሉቃስ","Luke"],
+        ["ሊቀ","leader / chief"],
+        ["ላም","cow"],
+        ["ሌዋዊ","Levite"],
+        ["ልብ","heart"],
+        ["ሎሚ","lemon"]
+      ]],
+
+      ["ሐ", "h", ["ሐ","ሑ","ሒ","ሓ","ሔ","ሕ","ሖ"], [
+        ["ሐዋርያ","apostle"],
+        null,
+        null,
+        null,
+        ["ሔኖክ","Enoch"],
+        ["ሕይወት","life"],
+        ["ሖሴዕ","Hosea"]
+      ]],
+
+      ["መ", "m", ["መ","ሙ","ሚ","ማ","ሜ","ም","ሞ"], [
+        ["መሲሕ","Messiah / Christ"],
+        ["ሙሴ","Moses"],
+        ["ሚካኤል","Michael"],
+        ["ማርያም","Mary"],
+        ["ሜዳ","field / plain"],
+        ["ምሕረት","mercy"],
+        ["ሞት","death"]
+      ]],
+
+      ["ሠ", "s", ["ሠ","ሡ","ሢ","ሣ","ሤ","ሥ","ሦ"], [
+        ["ሠላም","peace — historic spelling"],
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]],
+
+      ["ረ", "r", ["ረ","ሩ","ሪ","ራ","ሬ","ር","ሮ"], [
+        ["ረሃብ","famine / hunger"],
+        ["ሩት","Ruth"],
+        null,
+        ["ራሔል","Rachel"],
+        ["ሬሳ","body / corpse"],
+        ["ርኅራኄ","compassion"],
+        ["ሮም","Rome"]
+      ]],
+
+      ["ሰ", "s", ["ሰ","ሱ","ሲ","ሳ","ሴ","ስ","ሶ"], [
+        ["ሰማይ","heaven / sky"],
+        ["ሱራፌል","Seraphim"],
+        ["ሲራክ","Sirach"],
+        ["ሳሙኤል","Samuel"],
+        ["ሴት","Seth"],
+        ["ስም","name"],
+        ["ሶሎሞን","Solomon"]
+      ]],
+
+      ["ሸ", "sh", ["ሸ","ሹ","ሺ","ሻ","ሼ","ሽ","ሾ"], [
+        ["ሸለቆ","valley"],
+        ["ሹም","leader / official"],
+        ["ሺህ","thousand"],
+        ["ሻሎም","peace"],
+        null,
+        ["ሽቱ","perfume"],
+        ["ሾላ","palm tree"]
+      ]],
+
+      ["ቀ", "q", ["ቀ","ቁ","ቂ","ቃ","ቄ","ቅ","ቆ"], [
+        ["ቀን","day"],
+        ["ቁርባን","communion / offering"],
+        ["ቂሮስ","Cyrus"],
+        ["ቃል","word"],
+        ["ቄስ","priest"],
+        ["ቅዱስ","holy"],
+        ["ቆሮንቶስ","Corinth"]
+      ]],
+
+      ["በ", "b", ["በ","ቡ","ቢ","ባ","ቤ","ብ","ቦ"], [
+        ["በግ","lamb / sheep"],
+        ["ቡሩክ","blessed"],
+        ["ቢታንያ","Bethany"],
+        ["ባቢሎን","Babylon"],
+        ["ቤተ ልሔም","Bethlehem"],
+        ["ብርሃን","light"],
+        ["ቦዔዝ","Boaz"]
+      ]],
+
+      ["ቨ", "v", ["ቨ","ቩ","ቪ","ቫ","ቬ","ቭ","ቮ"], [
+        null, null, null, null, null, null, null
+      ]],
+
+      ["ተ", "t", ["ተ","ቱ","ቲ","ታ","ቴ","ት","ቶ"], [
+        ["ተስፋ","hope"],
+        null,
+        ["ቲቶ","Titus"],
+        ["ታቦር","Tabor"],
+        ["ቴዎፍሎስ","Theophilus"],
+        ["ትዕግሥት","patience"],
+        ["ቶማስ","Thomas"]
+      ]],
+
+      ["ቸ", "ch", ["ቸ","ቹ","ቺ","ቻ","ቼ","ች","ቾ"], [
+        ["ቸርነት","kindness / goodness"],
+        null,
+        null,
+        ["ቻይ","able"],
+        null,
+        ["ችግር","difficulty"],
+        null
+      ]],
+
+      ["ኀ", "h", ["ኀ","ኁ","ኂ","ኃ","ኄ","ኅ","ኆ"], [
+        null,
+        null,
+        null,
+        ["ኃጢአት","sin"],
+        null,
+        ["ኅብስት","bread — traditional form"],
+        null
+      ]],
+
+      ["ነ", "n", ["ነ","ኑ","ኒ","ና","ኔ","ን","ኖ"], [
+        ["ነቢይ","prophet"],
+        ["ኑኃሚን","Naomi"],
+        ["ኒቆዲሞስ","Nicodemus"],
+        ["ናኦሚ","Naomi"],
+        ["ኔህምያ","Nehemiah"],
+        ["ንጉሥ","king"],
+        ["ኖኅ","Noah"]
+      ]],
+
+      ["ኘ", "ny", ["ኘ","ኙ","ኚ","ኛ","ኜ","ኝ","ኞ"], [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]],
+
+      ["አ", "ʾ", ["አ","ኡ","ኢ","ኣ","ኤ","እ","ኦ"], [
+        ["አምላክ","God"],
+        ["ኡራኤል","Uriel"],
+        ["ኢየሱስ","Jesus"],
+        null,
+        ["ኤልያስ","Elijah"],
+        ["እምነት","faith"],
+        ["ኦሪት","Torah / Law"]
+      ]],
+
+      ["ከ", "k", ["ከ","ኩ","ኪ","ካ","ኬ","ክ","ኮ"], [
+        ["ከተማ","city"],
+        ["ኩራት","pride"],
+        ["ኪዳን","covenant"],
+        ["ካህን","priest"],
+        null,
+        ["ክርስቶስ","Christ"],
+        ["ኮርኔሌዎስ","Cornelius"]
+      ]],
+
+      ["ኸ", "kh", ["ኸ","ኹ","ኺ","ኻ","ኼ","ኽ","ኾ"], [
+        null, null, null, null, null, null, null
+      ]],
+
+      ["ወ", "w", ["ወ","ዉ","ዊ","ዋ","ዌ","ው","ዎ"], [
+        ["ወንጌል","Gospel / Good News"],
+        null,
+        null,
+        ["ዋሻ","cave"],
+        null,
+        ["ውኃ","water"],
+        null
+      ]],
+
+      ["ዐ", "ʿ", ["ዐ","ዑ","ዒ","ዓ","ዔ","ዕ","ዖ"], [
+        ["ዐይን","eye"],
+        ["ዑዝያ","Uzziah"],
+        ["ዒላም","Elam"],
+        ["ዓለም","world"],
+        ["ዔድን","Eden"],
+        ["ዕድል","chance / portion"],
+        null
+      ]],
+
+      ["ዘ", "z", ["ዘ","ዙ","ዚ","ዛ","ዜ","ዝ","ዞ"], [
+        ["ዘር","seed / descendants"],
+        ["ዙፋን","throne"],
+        null,
+        ["ዛሬ","today"],
+        ["ዜና","news"],
+        ["ዝማሬ","song / praise"],
+        ["ዞባ","region"]
+      ]],
+
+      ["ዠ", "zh", ["ዠ","ዡ","ዢ","ዣ","ዤ","ዥ","ዦ"], [
+        null, null, null, null, null, null, null
+      ]],
+
+      ["የ", "y", ["የ","ዩ","ዪ","ያ","ዬ","ይ","ዮ"], [
+        ["የሩሳሌም","Jerusalem"],
+        ["ዩሐንስ","John"],
+        null,
+        ["ያዕቆብ","Jacob / James"],
+        null,
+        ["ይሁዳ","Judah / Judas"],
+        ["ዮሐንስ","John"]
+      ]],
+
+      ["ደ", "d", ["ደ","ዱ","ዲ","ዳ","ዴ","ድ","ዶ"], [
+        ["ደቀ መዝሙር","disciple"],
+        ["ዱቄት","flour"],
+        ["ዲያብሎስ","devil"],
+        ["ዳዊት","David"],
+        null,
+        ["ድንግል","virgin"],
+        ["ዶሮ","chicken"]
+      ]],
+
+      ["ጀ", "j", ["ጀ","ጁ","ጂ","ጃ","ጄ","ጅ","ጆ"], [
+        ["ጀነት","paradise"],
+        null,
+        null,
+        ["ጃንደረባ","palace official"],
+        null,
+        ["ጅብ","hyena"],
+        ["ጆሮ","ear"]
+      ]],
+
+      ["ገ", "g", ["ገ","ጉ","ጊ","ጋ","ጌ","ግ","ጎ"], [
+        ["ገሊላ","Galilee"],
+        ["ጉባኤ","assembly"],
+        ["ጊዜ","time"],
+        ["ጋሊላ","Galilee"],
+        ["ጌታ","Lord"],
+        ["ግብጽ","Egypt"],
+        ["ጎልጎታ","Golgotha"]
+      ]],
+
+      ["ጠ", "ṭ", ["ጠ","ጡ","ጢ","ጣ","ጤ","ጥ","ጦ"], [
+        ["ጠቢብ","wise person"],
+        ["ጡት","breast"],
+        ["ጢሞቴዎስ","Timothy"],
+        ["ጣዖት","idol"],
+        ["ጤና","health"],
+        ["ጥምቀት","baptism"],
+        ["ጦር","army / spear"]
+      ]],
+
+      ["ጨ", "ch'", ["ጨ","ጩ","ጪ","ጫ","ጬ","ጭ","ጮ"], [
+        ["ጨለማ","darkness"],
+        ["ጩኸት","cry / shouting"],
+        null,
+        ["ጫማ","shoe"],
+        null,
+        ["ጭቃ","mud"],
+        ["ጮክ","loudly"]
+      ]],
+
+      ["ጰ", "p'", ["ጰ","ጱ","ጲ","ጳ","ጴ","ጵ","ጶ"], [
+        null,
+        null,
+        null,
+        ["ጳውሎስ","Paul"],
+        ["ጴጥሮስ","Peter"],
+        null,
+        null
+      ]],
+
+      ["ጸ", "ts", ["ጸ","ጹ","ጺ","ጻ","ጼ","ጽ","ጾ"], [
+        ["ጸጋ","grace"],
+        ["ጹም","fasting"],
+        null,
+        ["ጻድቅ","righteous person"],
+        null,
+        ["ጽዮን","Zion"],
+        ["ጾም","fast"]
+      ]],
+
+      ["ፀ", "ts", ["ፀ","ፁ","ፂ","ፃ","ፄ","ፅ","ፆ"], [
+        ["ፀሐይ","sun"],
+        null,
+        null,
+        null,
+        null,
+        ["ፅንስ","pregnancy / seed"],
+        null
+      ]],
+
+      ["ፈ", "f", ["ፈ","ፉ","ፊ","ፋ","ፌ","ፍ","ፎ"], [
+        ["ፈተና","trial / temptation"],
+        ["ፉከራ","boasting"],
+        ["ፊት","face"],
+        ["ፋሲካ","Passover / Easter"],
+        null,
+        ["ፍቅር","love"],
+        ["ፎቅ","upper room / floor"]
+      ]],
+
+      ["ፐ", "p", ["ፐ","ፑ","ፒ","ፓ","ፔ","ፕ","ፖ"], [
+        null, null, null, null, null, null, null
+      ]]
+    ];
+
+    function makeSound(root, vowel) {
+      if (root === "ʾ" || root === "ʿ") return vowel;
+      return root + vowel;
+    }
+
+    function speak(text) {
+      if (!("speechSynthesis" in window)) {
+        alert("Speech is not available in this browser.");
+        return;
+      }
+
+      speechSynthesis.cancel();
+
+      const voice = new SpeechSynthesisUtterance(text);
+      voice.lang = "am-ET";
+      voice.rate = 0.72;
+      speechSynthesis.speak(voice);
+    }
+
+    function renderFamilies(searchText = "") {
+      const query = searchText.trim().toLowerCase();
+      const box = document.getElementById("families");
+
+      const visible = families.filter(([base, root, glyphs, examples]) => {
+        const text = [
+          base,
+          root,
+          ...glyphs,
+          ...examples.flatMap(item => item ? item : [])
+        ].join(" ").toLowerCase();
+
+        return text.includes(query);
+      });
+
+      box.innerHTML = visible.map(([base, root, glyphs, examples]) => {
+        const cards = glyphs.map((glyph, i) => {
+          const sound = makeSound(root, vowels[i]);
+          const example = examples[i];
+
+          if (example) {
+            return `
+              <div class="letter-card">
+                <div class="letter-top">
+                  <div>
+                    <span class="glyph">${glyph}</span>
+                    <span class="sound">${sound}</span>
+                  </div>
+                  <button class="small-speak" onclick="speak('${glyph}')">🔊</button>
+                </div>
+
+                <div class="example">
+                  <div class="word-line">
+                    <span class="word">${example[0]}</span>
+                    <button class="small-speak" onclick="speak('${example[0]}')">🔊</button>
+                  </div>
+                  <span class="meaning">${example[1]}</span>
+                </div>
+              </div>
+            `;
+          }
+
+          return `
+            <div class="letter-card">
+              <div class="letter-top">
+                <div>
+                  <span class="glyph">${glyph}</span>
+                  <span class="sound">${sound}</span>
+                </div>
+                <button class="small-speak" onclick="speak('${glyph}')">🔊</button>
+              </div>
+
+              <div class="example">
+                <span class="rare">
+                  Rare or historical form in modern Amharic. Practice reading the sound: ${sound}.
+                </span>
+              </div>
+            </div>
+          `;
+        }).join("");
+
+        return `
+          <article class="family">
+            <div class="family-header">
+              <div>
+                <h3>${base} Family</h3>
+                <small>${glyphs.join("  ")}</small>
+              </div>
+              <button onclick="speak('${glyphs.join(" ")}')">🔊 Hear</button>
+            </div>
+            <div class="letters">${cards}</div>
+          </article>
+        `;
+      }).join("");
+
+      if (!visible.length) {
+        box.innerHTML = "<p>No matching Fidel letter or word was found.</p>";
+      }
+    }
+
+    const quizLetters = families.flatMap(([base, root, glyphs]) =>
+      glyphs.map((glyph, index) => ({
+        glyph,
+        sound: makeSound(root, vowels[index])
+      }))
+    );
+
+    function shuffle(items) {
+      return [...items].sort(() => Math.random() - 0.5);
+    }
+
+    function newQuiz() {
+      const target = quizLetters[Math.floor(Math.random() * quizLetters.length)];
+
+      const choices = shuffle([
+        target,
+        ...shuffle(quizLetters.filter(item => item.glyph !== target.glyph)).slice(0, 3)
+      ]);
+
+      document.getElementById("question").innerHTML = `
+        Which letter is read approximately as <strong>${target.sound}</strong>?
+        <button class="small-speak" onclick="speak('${target.glyph}')">🔊</button>
+      `;
+
+      document.getElementById("answers").innerHTML = choices.map(choice => `
+        <button class="answer" onclick="checkAnswer('${choice.glyph}', '${target.glyph}', '${target.sound}')">
+          ${choice.glyph}
+        </button>
+      `).join("");
+
+      document.getElementById("result").textContent = "";
+    }
+
+    function checkAnswer(selected, correct, sound) {
+      const result = document.getElementById("result");
+
+      if (selected === correct) {
+        result.textContent = `Correct. ${correct} is read approximately as ${sound}.`;
+        result.className = "correct";
+      } else {
+        result.textContent = `Try again. The answer is ${correct}, read approximately as ${sound}.`;
+        result.className = "incorrect";
+      }
+    }
+
+    document.getElementById("search").addEventListener("input", function () {
+      renderFamilies(this.value);
+    });
+
+    renderFamilies();
+    newQuiz();
+  </script>
+</body>
+</html>
